@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="register-section" style="padding: 40px 0; background: #f4f7f6;">
+    <div class="register-card" style="max-width: 900px; margin: auto; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); overflow: hidden; display: flex; flex-wrap: wrap;">
+        
+        <form action="/register" method="POST" enctype="multipart/form-data" id="regForm" style="display: flex; width: 100%; flex-wrap: wrap;">
+            
+           <div class="profile-sidebar" style="flex: 1; min-width: 300px; background: #2c3e50; color: white; padding: 40px; text-align: center; display: flex; flex-direction: column; justify-content: space-between;">
+                
+                <div>
+                    <div class="profile-circle" style="width: 150px; height: 150px; border-radius: 50%; background: #fff; overflow: hidden; border: 5px solid #27AE60; margin: 0 auto 20px;">
+                        <img src="{{ url_for('static', filename='images/default_user.png') }}" id="previewImg" style="width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <p id="photoLabel" style="font-size: 13px; color: #bdc3c7;">Profile photo is compulsory *</p>
+                    <input type="file" name="profile_photo" id="profileInput" hidden accept="image/*" required onchange="previewProfile(this)">
+                    <button type="button" onclick="document.getElementById('profileInput').click()" style="background: #27AE60; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer;">📷 Select Photo</button>
+                </div>
+
+                <div style="margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">
+                    <p style="font-size: 14px; color: #bdc3c7; margin-bottom: 10px;">Already have an account?</p>
+                    <a href="/login" style="display: block; text-decoration: none; color: white; border: 1px solid #27AE60; padding: 10px; border-radius: 8px; font-size: 14px; transition: 0.3s; font-weight: 500;" 
+                       onmouseover="this.style.background='#27AE60';" 
+                       onmouseout="this.style.background='transparent';">
+                       Go to Login
+                    </a>
+                </div>
+            </div>
+            <div class="form-main" style="flex: 2; padding: 40px; min-width: 350px;">
+                <h2>Secure Registration</h2>
+                
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Mention Your Role *</label>
+                    <select name="role" id="roleSelector" required onchange="handleRoleChange()" style="width: 100%; padding: 12px; border-radius: 8px;">
+                        <option value="">-- Select Role --</option>
+                        <option value="Lab">Medical Laboratory (Lab)</option>
+                        <option value="Other">Other / Individual</option>
+                    </select>
+                </div>
+
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                    <input type="text" name="name" id="nameInput" placeholder="Full Name *" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <input type="email" name="email" placeholder="Email Address *" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <input type="text" name="phone" placeholder="Phone Number *" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <input type="text" name="license_no" id="labLicense" 
+       placeholder="Lab License No. (e.g. LAB-001) *" 
+       style="padding: 12px; border: 1px solid #ddd; border-radius: 8px; outline: none; display: none;">
+                </div>
+
+                <textarea name="address" placeholder="Full Address *" required style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-top: 15px; height: 80px;"></textarea>
+
+                <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px;">
+                    <input type="password" name="password" placeholder="Password *" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password *" required style="padding: 12px; border: 1px solid #ddd; border-radius: 8px;">
+                </div>
+
+                <div style="margin-top:25px; padding: 15px; border: 1px dashed #27AE60; border-radius: 10px; background: #f9f9f9;">
+                    <label id="sigLabel" style="font-weight: bold;">Digital Signature / Stamp *</label>
+                    <input type="file" name="signature" required style="display: block; margin-top: 10px;">
+                </div>
+
+                <button type="submit" style="width: 100%; background: #27AE60; color: white; padding: 15px; border: none; border-radius: 8px; margin-top: 25px; cursor: pointer; font-weight: bold;">Register Now</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="verify-section">
+    <div class="verify-container">
+        <div class="verify-header">
+            <h1>Instant <span class="highlight">Verification</span></h1>
+            <p id="limit-msg">You have 1 free verification remaining.</p>
+        </div>
+
+        <div class="verify-box" id="main-verify-box">
+            <div class="verify-form">
+                <div class="input-group">
+                    <label>Report Reference ID</label>
+                    <input type="text" id="reportId" placeholder="Enter ID (e.g., RC-8821)" class="verify-input">
+                </div>
+                <div class="divider"><span>OR</span></div>
+                <div class="upload-area" onclick="document.getElementById('fileElem').click()">
+                    <span class="upload-icon">📸</span>
+                    <p>Click to <strong>Scan</strong> or Upload Report</p>
+                    <input type="file" id="fileElem" hidden>
+                </div>
+                <button class="btn verify-submit-btn" onclick="startVerification()">Verify Now</button>
+            </div>
+
+            <div class="verify-info">
+                <h3>One-Time Guest Access</h3>
+                <p>Free users can verify one report without registration. For unlimited access, please login.</p>
+                <div class="security-badge">🔒 Encrypted Connection</div>
+            </div>
+        </div>
+
+        <div class="usage-guide">
+            <h2 class="section-title">How to Verify?</h2>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <div class="guide-icon">1</div>
+                    <h4>Enter Details</h4>
+                    <p>Enter the Report ID or upload a clear photo/PDF of your medical report.</p>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon">2</div>
+                    <h4>Cross-Checking</h4>
+                    <p>Our system securely connects with the hospital database to match records.</p>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon">3</div>
+                    <h4>View Results</h4>
+                    <p>Get instant confirmation of the report's authenticity and doctor details.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div id="resultModal" class="modal">
+    <div class="modal-content">
+        <div id="result-icon"></div>
+        <h2 id="result-title"></h2>
+        <div class="result-details">
+            <p id="result-doctor"></p>
+            <p id="result-date"></p>
+        </div>
+        <button class="btn" onclick="closeModal()">Close & Register for More</button>
+    </div>
+</div>
+
+{% endblock %}

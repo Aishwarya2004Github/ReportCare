@@ -1,0 +1,195 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="slideshow-container">
+    <div class="slide fade">
+        <div class="slide-text">
+            <h1 data-lang="slide1_title">Trusted Medical Report Verification</h1>
+            <p data-lang="slide1_desc">
+                Ensure every surgical and diagnostic report is authentic, accurate, and verified through our secure medical verification system.
+            </p>
+        </div>
+        <div class="slide-right">
+            <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Slide Image">
+        </div>
+    </div>
+
+    <div class="slide fade">
+        <div class="slide-text">
+            <h1>Hospital-Grade Report Accuracy</h1>
+            <p>From ICU records to discharge summaries, verify hospital reports with complete transparency and confidence.</p>
+        </div>
+        <div class="slide-right">
+            <img src="{{ url_for('static', filename='images/slide2.jpg') }}" alt="Slide Image">
+        </div>
+    </div>
+
+    <div class="slide fade">
+        <div class="slide-text">
+            <h1>Simple. Safe. Reliable.</h1>
+            <p>Designed for patients and hospitals alike — our platform makes medical report verification easy and stress-free.</p>
+        </div>
+        <div class="slide-right">
+            <img src="{{ url_for('static', filename='images/slide3.png') }}" alt="Slide Image">
+        </div>
+    </div>
+</div>
+
+<section class="quote-section">
+    <div class="quote-container">
+        <div class="quote-card">
+            <span class="quote-icon">"</span>
+            <p>Your health is your greatest wealth. We ensure your medical records are as authentic as your trust in us.</p>
+            <div class="quote-footer"><strong>ReportCare Assurance</strong></div>
+        </div>
+
+        <div class="quote-card featured">
+            <span class="quote-icon">"</span>
+            <p>In the world of healthcare, accuracy isn't just a goal—it's a necessity. Verified reports save lives.</p>
+            <div class="quote-footer"><strong>Integrity in Medicine</strong></div>
+        </div>
+
+        <div class="quote-card">
+            <span class="quote-icon">"</span>
+            <p>Security and transparency are the pillars of modern diagnostics. Verify once, trust forever.</p>
+            <div class="quote-footer"><strong>Global Health Standards</strong></div>
+        </div>
+    </div>
+</section>
+
+<section class="doctors-section">
+    <div class="section-header">
+        <h2 data-lang="doctors_title">Meet Our Specialists</h2>
+        <p>Expert doctors committed to your health and report accuracy.</p>
+    </div>
+
+    <div class="doctors-grid">
+        <div class="doctor-card" onclick="location.href='/doctor/1'">
+            <div class="doctor-img">
+                <img src="{{ url_for('static', filename='images/doctor1.png') }}" alt="Doctor">
+            </div>
+            <div class="doctor-info">
+                <h3>Dr. Sarah Johnson</h3>
+                <p class="specialty">Senior Cardiologist</p>
+                <p class="assurance">Known for: Detailed Analysis</p>
+            </div>
+        </div>
+
+        <div class="doctor-card" onclick="location.href='/doctor/2'">
+            <div class="doctor-img">
+                <img src="{{ url_for('static', filename='images/doctor2.png') }}" alt="Doctor">
+            </div>
+            <div class="doctor-info">
+                <h3>Dr. Rajesh Kumar</h3>
+                <p class="specialty">Pathology Expert</p>
+                <p class="assurance">Known for: 100% Accuracy</p>
+            </div>
+        </div>
+
+        <div class="doctor-card" onclick="location.href='/doctor/3'">
+            <div class="doctor-img">
+                <img src="{{ url_for('static', filename='images/doctor3.png') }}" alt="Doctor">
+            </div>
+            <div class="doctor-info">
+                <h3>Dr. Michael Chen</h3>
+                <p class="specialty">Neurologist</p>
+                <p class="assurance">Known for: Patient Trust</p>
+            </div>
+        </div>
+
+        <div class="doctor-card" onclick="location.href='/doctor/4'">
+            <div class="doctor-img">
+                <img src="{{ url_for('static', filename='images/doctor4.png') }}" alt="Doctor">
+            </div>
+            <div class="doctor-info">
+                <h3>Dr. Anjali Mehta</h3>
+                <p class="specialty">Radiologist</p>
+                <p class="assurance">Known for: Quick Verification</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="stats-section">
+    <div class="stats-container">
+        <div class="stat-item">
+            <div class="stat-icon">👥</div>
+            <h2 class="stat-number">10,000+</h2>
+            <p>Happy Patients</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon">📄</div>
+            <h2 class="stat-number">50,000+</h2>
+            <p>Reports Verified</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon">🏥</div>
+            <h2 class="stat-number">100+</h2>
+            <p>Partner Clinics</p>
+        </div>
+        <div class="stat-item">
+            <div class="stat-icon">⭐</div>
+            <h2 class="stat-number">4.9/5</h2>
+            <p>Trust Rating</p>
+        </div>
+    </div>
+</section>
+
+<section class="hospital-partners">
+    <div class="section-header">
+        <h2 data-lang="partners_title">Our Network Partners</h2>
+        <p>Verified reports from India's most trusted healthcare institutions.</p>
+    </div>
+
+    <div class="hospitals-grid">
+        <div class="hosp-card" onclick="location.href='/hospital/apollo-hospitals'">
+            <div class="hosp-image">
+                <img src="{{ url_for('static', filename='images/slide1.jpg') }}" alt="Apollo">
+                <div class="hosp-rating">⭐ 4.8</div>
+            </div>
+            <div class="hosp-info">
+                <h3>Apollo Hospitals</h3>
+                <p class="tagline">"Touching Lives, Spreading Hope."</p>
+            </div>
+        </div>
+
+        <div class="hosp-card" onclick="location.href='/hospital/fortis-healthcare'">
+            <div class="hosp-image">
+                <img src="{{ url_for('static', filename='images/slide2.jpg') }}" alt="Fortis">
+                <div class="hosp-rating">⭐ 4.7</div>
+            </div>
+            <div class="hosp-info">
+                <h3>Fortis Healthcare</h3>
+                <p class="tagline">"A Community of Care."</p>
+            </div>
+        </div>
+
+        <div class="hosp-card" onclick="location.href='/hospital/max-healthcare'">
+            <div class="hosp-image">
+                <img src="{{ url_for('static', filename='images/slide5.jpg') }}" alt="Max Health">
+                <div class="hosp-rating">⭐ 4.9</div>
+            </div>
+            <div class="hosp-info">
+                <h3>Max Healthcare</h3>
+                <p class="tagline">"Caring for You, for Life."</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-content">
+        <p>Made with <span class="heart">❤</span> for secure healthcare verification</p>
+        <div class="footer-links">
+            <a href="/about">About Us</a>
+            <a href="/verify">Verify Report</a>
+            <a href="/how-it-works">How It Works</a>
+            <a href="/contact">Contact</a>
+            <a href="/privacy">Privacy</a>
+        </div>
+        <p class="footer-copy">© 2026 Medical Report Verification System</p>
+    </div>
+</footer>
+
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="auth-section">
+    <div class="auth-card" style="max-width: 400px; text-align: center;">
+        <div class="auth-header">
+            <span class="lock-icon">📧</span>
+            <h2>Verify OTP</h2>
+            <p>Please enter the 4-digit OTP sent to your terminal/email.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form action="/verify-otp" method="POST" class="auth-form">
+            <div class="form-group">
+                <input type="text" name="otp" placeholder="Enter 4-Digit OTP" 
+                       required maxlength="4" class="verify-input" 
+                       style="text-align: center; font-size: 24px; letter-spacing: 10px;">
+            </div>
+            <button type="submit" class="btn auth-btn">Verify OTP</button>
+        </form>
+        
+        <div class="auth-footer">
+            <p><a href="/forgot-password">Resend OTP</a></p>
+        </div>
+    </div>
+</section>
+{% endblock %}

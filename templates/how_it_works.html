@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="how-it-works">
+    <div class="container">
+        <div class="page-header">
+            <h1>Platform <span class="highlight">Workflow</span></h1>
+            <p>Transparency and security at every step of your healthcare journey.</p>
+        </div>
+
+        <div class="workflow-section">
+            <h2 class="role-title">👨‍⚕️ For Doctors & Labs</h2>
+            <div class="workflow-grid">
+                <div class="work-card">
+                    <span class="step-badge">1</span>
+                    <h3>Create Account</h3>
+                    <p>Register as an authorized medical professional or laboratory.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">2</span>
+                    <h3>Add Patient</h3>
+                    <p>Register patient details and assign a unique Patient ID.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">3</span>
+                    <h3>Upload Results</h3>
+                    <p>Input test findings and diagnosis into the secure portal.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">4</span>
+                    <h3>Generate & Download</h3>
+                    <p>Click "Generate Report" to create a QR-secured PDF instantly.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="workflow-section alt-bg">
+            <h2 class="role-title">👤 For Patients</h2>
+            <div class="workflow-grid">
+                <div class="work-card">
+                    <span class="step-badge">1</span>
+                    <h3>Sign Up</h3>
+                    <p>Create your personal health profile securely.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">2</span>
+                    <h3>Book Appointment</h3>
+                    <p>Select your preferred doctor and schedule a visit.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">3</span>
+                    <h3>Visit & Consult</h3>
+                    <p>Visit the clinic for checkup and diagnostic tests.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">4</span>
+                    <h3>Get Report</h3>
+                    <p>Access and download your verified report from your dashboard.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="workflow-section">
+            <h2 class="role-title">🔍 For Others (Verifiers)</h2>
+            <div class="workflow-grid">
+                <div class="work-card">
+                    <span class="step-badge">1</span>
+                    <h3>Guest Access</h3>
+                    <p>No login needed for basic checks. Simply visit the verify page.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">2</span>
+                    <h3>Scan or Input</h3>
+                    <p>Use the QR scanner, type the ID, or drag-and-drop the report file.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">3</span>
+                    <h3>Match Record</h3>
+                    <p>The system cross-references data with our blockchain-backed database.</p>
+                </div>
+                <div class="work-card">
+                    <span class="step-badge">4</span>
+                    <h3>Instant Results</h3>
+                    <p>Green tick for authentic reports with the issuing doctor's name.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 900px; margin: 40px auto; padding: 20px;">
+    <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+        <div style="background: linear-gradient(135deg, #27AE60, #2ecc71); padding: 40px; text-align: center; color: white;">
+            <img src="{{ url_for('static', filename='uploads/profile_pictures/' + lab.profile_pic) }}" 
+                 style="width: 120px; height: 120px; border-radius: 50%; border: 5px solid rgba(255,255,255,0.3); object-fit: cover; margin-bottom: 15px;">
+            <h2>{{ lab.name }}</h2>
+            <p><i class="fas fa-certificate"></i> Certified Diagnostic Laboratory</p>
+        </div>
+
+        <div style="padding: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+            <div>
+                <h4 style="border-bottom: 2px solid #f1f1f1; padding-bottom: 10px; margin-bottom: 15px; color: #2c3e50;">Registration Details</h4>
+                <p><strong><i class="fas fa-envelope"></i> Email:</strong> {{ lab.email }}</p>
+                <p><strong><i class="fas fa-phone"></i> Contact:</strong> {{ lab.phone }}</p>
+                <p><strong><i class="fas fa-id-card"></i> License No:</strong> {{ lab.license_no }}</p>
+                <p><strong><i class="fas fa-map-marker-alt"></i> Address:</strong> {{ lab.address }}</p>
+                <p><strong><i class="fas fa-file-medical"></i> Total Reports:</strong> {{ total_reports }}</p>
+            </div>
+
+            <div style="text-align: center; background: #f9f9f9; padding: 20px; border-radius: 15px; border: 1px dashed #ddd;">
+                <h4 style="color: #2c3e50; margin-bottom: 15px;">Official Lab Signature</h4>
+                {% if lab.signature_img %}
+                    <img src="{{ url_for('static', filename='uploads/signatures/' + lab.signature_img) }}" style="max-width: 200px; mix-blend-mode: multiply;">
+                {% else %}
+                    <p style="color: #999;">No signature uploaded</p>
+                {% endif %}
+                <br><br>
+                <a href="/profile" class="btn" style="font-size: 12px; background: #3498db; color: white; padding: 5px 15px; text-decoration: none; border-radius: 4px;">Update Info</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

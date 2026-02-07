@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div style="max-width: 1100px; margin: 50px auto; padding: 0 20px;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2 style="color: #2c3e50; border-left: 5px solid #27AE60; padding-left: 15px;">{{ title }}</h2>
+    </div>
+
+    <div class="reports-container" style="display: flex; flex-direction: column; gap: 15px;">
+        {% if reports %}
+            {% for report in reports %}
+            <div class="report-card" style="background: white; border-radius: 12px; padding: 20px; display: flex; align-items: center; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #eee;">
+                
+                <div style="flex: 2;">
+                    <h4 style="margin: 0; color: #2c3e50;">Patient: {{ report.patient.name }}</h4>
+                    <small style="color: #95a5a6;">Analyzed on: {{ report.date.strftime('%d %b, %Y | %H:%M') }}</small>
+                </div>
+
+                <div style="flex: 1; text-align: center;">
+                    {% if report.prediction_result == 'Diabetic' %}
+                        <span style="background: #fdf2f2; color: #e74c3c; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px;">⚠️ {{ report.prediction_result }}</span>
+                    {% else %}
+                        <span style="background: #e8f5e9; color: #27AE60; padding: 6px 15px; border-radius: 20px; font-weight: bold; font-size: 14px;">✅ {{ report.prediction_result }}</span>
+                    {% endif %}
+                </div>
+
+                <div style="flex: 1; text-align: right;">
+                    <a href="/download-report/{{ report.id }}" style="text-decoration: none; background: #27AE60; color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600; font-size: 14px; transition: 0.3s;">
+                        📥 Download PDF
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 50px; background: white; border-radius: 15px;">
+                <p style="color: #7f8c8d; font-size: 18px;">No reports found in the records.</p>
+                <a href="/create-patient" style="color: #27AE60; font-weight: bold;">Create a patient to start analysis</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

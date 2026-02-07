@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+    body { font-family: 'Segoe UI', sans-serif; background: #f4f7f6; margin: 0; }
+    .container { max-width: 1000px; margin: 50px auto; padding: 20px; }
+    
+    /* Header Section */
+    .patient-header { 
+        background: #2c3e50; color: white; padding: 40px; 
+        border-radius: 15px; display: flex; justify-content: space-between; align-items: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    .patient-info h1 { margin: 0; font-size: 32px; letter-spacing: 1px; }
+    .patient-info p { margin: 5px 0 0; opacity: 0.8; }
+    .stats-badge { background: #27AE60; padding: 10px 20px; border-radius: 30px; font-weight: bold; }
+
+    /* Reports Section */
+    .history-card { 
+        background: white; border-radius: 15px; padding: 30px; margin-top: 30px;
+        box-shadow: 0 5px 25px rgba(0,0,0,0.05);
+    }
+    .history-title { border-bottom: 2px solid #27AE60; padding-bottom: 15px; margin-bottom: 25px; color: #2c3e50; }
+
+    /* Horizontal Report Row */
+    .report-item { 
+        display: flex; justify-content: space-between; align-items: center; 
+        padding: 20px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px;
+        transition: 0.3s;
+    }
+    .report-item:hover { transform: scale(1.01); box-shadow: 0 5px 15px rgba(0,0,0,0.05); border-color: #27AE60; }
+    
+    .report-meta { display: flex; flex-direction: column; }
+    .date { color: #95a5a6; font-size: 13px; margin-bottom: 5px; }
+    .result-text { font-size: 18px; font-weight: bold; margin: 0; }
+    .status-positive { color: #e74c3c; } /* Diabetic */
+    .status-negative { color: #27AE60; } /* Normal */
+
+    .metrics-row { font-size: 13px; color: #7f8c8d; margin-top: 5px; }
+    .badge-info { background: #e9ecef; color: #2c3e50; padding: 2px 8px; border-radius: 4px; margin-right: 10px; }
+
+    .btn-download { 
+        background: #3498db; color: white; padding: 12px 25px; 
+        border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px;
+        display: flex; align-items: center; gap: 8px; transition: 0.3s; border: none; cursor: pointer;
+    }
+    .btn-download:hover { background: #2980b9; box-shadow: 0 4px 12px rgba(52, 152, 219, 0.3); }
+</style>
+
+<div class="container">
+    <div class="patient-header">
+        <div class="patient-info">
+            <h1>{{ patient.name }}</h1>
+            <p>Patient ID: #PAT-00{{ patient.id }} | Age: {{ patient.age }} | Gender: {{ patient.gender }}</p>
+        </div>
+        <div class="stats-badge">{{ patient.reports|length }} Total Reports</div>
+    </div>
+
+    <div class="history-card">
+        <h2 class="history-title">📜 Past Analysis & Generated Reports</h2>
+
+        {% if patient.reports %}
+            {% for report in patient.reports|sort(attribute='date', reverse=True) %}
+            <div class="report-item">
+                <div class="report-meta">
+                    <span class="date">{{ report.date.strftime('%B %d, %Y - %I:%M %p') }}</span>
+                    <p class="result-text {% if report.prediction_result == 'Diabetic' %}status-positive{% else %}status-negative{% endif %}">
+                        Result: {{ report.prediction_result }}
+                    </p>
+                    <div class="metrics-row">
+                        <span class="badge-info">Glucose: {{ report.glucose }}</span>
+                        <span class="badge-info">BMI: {{ report.bmi }}</span>
+                        <span class="badge-info">Confidence: {{ report.accuracy }}</span>
+                    </div>
+                    {% if report.remarks %}
+                    <p style="margin-top: 8px; font-size: 13px; color: #555; font-style: italic;">
+                        <b>Remark:</b> {{ report.remarks[:60] }}{% if report.remarks|length > 60 %}...{% endif %}
+                    </p>
+                    {% endif %}
+                </div>
+                
+                <a href="/download-report/{{ report.id }}" class="btn-download">
+                    <span>📥</span> Download Report PDF
+                </a>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div style="text-align: center; padding: 40px;">
+                <p style="color: #95a5a6; font-size: 18px;">Is patient ke liye koi report generate nahi ki gayi hai.</p>
+                <a href="/predict" style="color: #27AE60; font-weight: bold; text-decoration: none;">+ Run New Prediction</a>
+            </div>
+        {% endif %}
+
+    </div>
+</div>
+{% endblock %}

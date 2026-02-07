@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis History | ReportCare Pro</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            margin: 0;
+            color: #2c3e50;
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: #ffffff;
+            padding: 15px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .navbar .brand {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #27AE60;
+            text-decoration: none;
+        }
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .username-link {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+        .logout-btn {
+            background: #e74c3c;
+            color: white;
+            padding: 8px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: 0.3s;
+        }
+        .logout-btn:hover { background: #c0392b; }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 2px solid #27AE60;
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+        }
+        .header-section h2 { margin: 0; font-size: 1.8rem; }
+        .back-link { font-size: 0.9rem; color: #27AE60; text-decoration: none; font-weight: 600; }
+
+        /* History Card Style */
+        .history-list { display: flex; flex-direction: column; gap: 15px; }
+
+        .history-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+            border-left: 5px solid #eee;
+            transition: 0.3s;
+        }
+        .history-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+        }
+        .history-card.diabetic { border-left-color: #e74c3c; }
+        .history-card.normal { border-left-color: #27ae60; }
+
+        .card-left .date {
+            font-size: 0.8rem;
+            color: #95a5a6;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .card-left .result-title {
+            margin: 0;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+        .status-tag {
+            padding: 2px 10px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+        .bg-red { background: #fdecea; color: #e74c3c; }
+        .bg-green { background: #e8f6f0; color: #27ae60; }
+
+        .card-details {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+        .card-details b { color: #2c3e50; }
+
+        .card-right .report-index {
+            background: #f1f3f5;
+            color: #2c3e50;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-weight: 700;
+            font-size: 0.9rem;
+        }
+
+        /* Action Buttons */
+        .btn-view-pdf {
+            margin-top: 10px;
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .btn-view-pdf:hover { text-decoration: underline; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="#" class="brand">ReportCare Pro</a>
+        <div class="nav-right">
+            <a href="/profile" class="username-link">👤 John_Doe_Lab</a>
+            <a href="/logout" class="logout-btn">Logout</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header-section">
+            <h2>Personal Analysis History</h2>
+            <a href="/predict" class="back-link">← New Prediction</a>
+        </div>
+
+        <div class="history-list">
+            
+            <div class="history-card diabetic">
+                <div class="card-left">
+                    <span class="date">February 02, 2026 - 09:45 PM</span>
+                    <h4 class="result-title">
+                        Result: Diabetic <span class="status-tag bg-red">Positive</span>
+                    </h4>
+                    <div class="card-details">
+                        Age: <b>45</b> | Confidence: <b>98.12%</b> | Glucose: <b>148</b>
+                    </div>
+                    <a href="#" class="btn-view-pdf">📥 Download PDF Report</a>
+                </div>
+                <div class="card-right">
+                    <div class="report-index">1</div>
+                </div>
+            </div>
+
+            <div class="history-card normal">
+                <div class="card-left">
+                    <span class="date">January 28, 2026 - 11:20 AM</span>
+                    <h4 class="result-title">
+                        Result: Normal <span class="status-tag bg-green">Negative</span>
+                    </h4>
+                    <div class="card-details">
+                        Age: <b>32</b> | Confidence: <b>99.45%</b> | Glucose: <b>95</b>
+                    </div>
+                    <a href="#" class="btn-view-pdf">📥 Download PDF Report</a>
+                </div>
+                <div class="card-right">
+                    <div class="report-index">2</div>
+                </div>
+            </div>
+
+            <div class="history-card normal">
+                <div class="card-left">
+                    <span class="date">January 15, 2026 - 03:10 PM</span>
+                    <h4 class="result-title">
+                        Result: Normal <span class="status-tag bg-green">Negative</span>
+                    </h4>
+                    <div class="card-details">
+                        Age: <b>28</b> | Confidence: <b>97.80%</b> | Glucose: <b>105</b>
+                    </div>
+                    <a href="#" class="btn-view-pdf">📥 Download PDF Report</a>
+                </div>
+                <div class="card-right">
+                    <div class="report-index">3</div>
+                </div>
+            </div>
+
+        </div>
+
+        <p style="text-align: center; color: #bdc3c7; font-size: 0.8rem; margin-top: 50px;">
+            Showing last 3 analysis records. All data is saved securely.
+        </p>
+    </div>
+
+</body>
+</html>

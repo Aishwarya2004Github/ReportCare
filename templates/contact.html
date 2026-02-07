@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="contact-page">
+    <div class="contact-container">
+        <div class="contact-info">
+            <h1>Get in <span class="highlight">Touch</span></h1>
+            <p>Have questions about report verification? Our team is available 24/7 for technical support and lab onboarding.</p>
+            
+            <div class="info-details">
+                <div class="info-item">
+                    <span class="info-icon">📍</span>
+                    <div>
+                        <h4>Location</h4>
+                        <p>123 Medical Park, Health City, India</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📧</span>
+                    <div>
+                        <h4>Email Us</h4>
+                        <p>support@reportcare.com</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <span class="info-icon">📞</span>
+                    <div>
+                        <h4>Call Support</h4>
+                        <p>+91 800 123 4567</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-form-wrapper">
+            <form class="contact-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" placeholder="John Doe" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Subject</label>
+                    <select>
+                        <option>Technical Support</option>
+                        <option>Lab Partnership</option>
+                        <option>Report Discrepancy</option>
+                        <option>General Inquiry</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Message</label>
+                    <textarea rows="5" placeholder="How can we help you?"></textarea>
+                </div>
+                <button type="submit" class="btn contact-btn">Send Message</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 1100px; margin: 40px auto; padding: 0 20px;">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+        <h2>Registered Patients</h2>
+        <a href="/create-patient" style="background: #27AE60; color: white; padding: 10px 20px; border-radius: 8px; text-decoration: none;">+ New Patient</a>
+    </div>
+
+    <div class="patient-list" style="display: flex; flex-direction: column; gap: 15px;">
+        {% for patient in patients %}
+        <div class="patient-card" onclick="window.location.href='/patient-history/{{ patient.id }}'" style="background: white; border-radius: 12px; display: flex; align-items: center; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); transition: 0.3s; position: relative; border-left: 6px solid #27AE60;">
+            
+            <a href="/patient-history/{{ patient.id }}" style="position: absolute; top: 0; left: 0; width: 80%; height: 100%; text-decoration: none; z-index: 1;"></a>
+
+            <div style="flex: 1;">
+                <h3 style="margin: 0; color: #2c3e50;">{{ patient.name }}</h3>
+                <span style="font-size: 13px; color: #7f8c8d;">Patient ID: #PAT-00{{ patient.id }}</span>
+            </div>
+
+            <div style="flex: 1; text-align: center;">
+                <p style="margin: 0; color: #34495e;"><b>Age:</b> {{ patient.age }} | <b>Sex:</b> {{ patient.gender }}</p>
+            </div>
+
+            <div style="flex: 1; text-align: center;">
+                <p style="margin: 0; color: #34495e;"><b>Contact:</b> {{ patient.phone }}</p>
+            </div>
+
+            <div style="display: flex; gap: 10px; z-index: 2;">
+                <a href="/edit-patient/{{ patient.id }}" style="background: #f39c12; color: white; padding: 8px 15px; border-radius: 5px; text-decoration: none; font-size: 13px;">Edit</a>
+                <form action="/delete-patient/{{ patient.id }}" method="POST" onsubmit="return confirm('Delete this patient?')">
+                    <button type="submit" style="background: #e74c3c; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; font-size: 13px;">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

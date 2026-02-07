@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="auth-section">
+    <div class="auth-container">
+        <div class="auth-card">
+            <div class="auth-header">
+                <span class="lock-icon">🔒</span>
+                <h2 data-lang="login">Welcome Back</h2>
+                <p>Login to access your verified medical dashboard</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+
+            <form method="POST" class="auth-form">
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="name@hospital.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="••••••••" required>
+                </div>
+                
+                <div class="auth-options">
+                    <label><input type="checkbox"> Remember me</label>
+                    <a href="/forgot-password">Forgot Password?</a>
+                </div>
+
+                <button type="submit" class="btn auth-btn">Secure Login</button>
+            </form>
+
+            <div class="auth-footer">
+                <p>Don't have an account? <a href="/register">Create Account</a></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

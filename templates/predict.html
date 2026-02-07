@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block content %}
+<style>
+
+    .main-wrapper { display: flex; gap: 25px; padding: 30px; background: #f8f9fa; min-height: 100vh; font-family: 'Poppins', sans-serif; }
+    .glass-card { background: white; padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); flex: 1.2; border: 1px solid #eee; position: relative; }
+    .section-title { font-size: 1.1rem; font-weight: 700; color: var(--dark); border-left: 5px solid var(--primary); padding-left: 15px; margin-bottom: 20px; }
+    .input-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .full-width { grid-column: span 2; }
+    .input-group { display: flex; flex-direction: column; gap: 5px; }
+    label { font-size: 0.85rem; font-weight: 600; color: #555; }
+    input, select, textarea { padding: 10px; border: 1.5px solid #eee; border-radius: 8px; outline: none; transition: 0.3s; font-size: 0.9rem; }
+    input:focus { border-color: var(--primary); }
+    .btn-submit { background: var(--dark); color: white; padding: 15px; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; width: 100%; transition: 0.3s; margin-top: 15px; font-size: 1rem; }
+    .btn-submit:hover { background: #000; transform: translateY(-2px); }
+    
+    /* Result Section */
+    #result-panel { flex: 0.8; display: none; flex-direction: column; gap: 20px; }
+    .status-card { padding: 20px; border-radius: 15px; text-align: center; }
+    .risk-bar-container { height: 12px; background: #eee; border-radius: 6px; margin: 15px 0; overflow: hidden; }
+    .risk-bar-fill { height: 100%; transition: 1.5s width; width: 0%; }
+
+    /* History Button Styling */
+    .header-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .btn-history { background: #34495e; color: white; padding: 8px 16px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 0.85rem; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+    .btn-history:hover { background: var(--dark); transform: scale(1.05); color: white; }
+
+</style>
+
+<div class="main-wrapper">
+    <div class="glass-card">
+        <div class="header-top">
+            <div class="section-title" style="margin-bottom: 0;">Step 1: Patient Selection</div>
+            {% if session.get('role') == 'lab' or user.license_no %}
+                <a href="/dashboard" class="btn-history">📊 Lab Dashboard</a>
+            {% else %}
+                <a href="/my-history" class="btn-history">📜 My History</a>
+            {% endif %}
+        </div>
+
+        <div class="mb-3 d-flex gap-2">
+            <button onclick="toggleMode('existing')" id="btn-ex" class="btn btn-primary btn-sm">Existing Patient</button>
+            <button onclick="toggleMode('manual')" id="btn-man" class="btn btn-outline-primary btn-sm">Add New Manual</button>
+        </div>
+
+        <form id="preForm">
+            <div id="existing-sec" class="mb-4">
+                <label>Registered Patient List</label>
+                <select id="patient_id" class="form-select">
+                    <option value="">-- Search Patient --</option>
+                    {% for p in patients %}
+                    <option value="{{ p.id }}">{{ p.name }} (ID: {{ p.id }})</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div id="manual-sec" style="display:none;" class="input-grid mb-4">
+                <div class="input-group"><label>Full Name</label><input type="text" id="m_name"></div>
+                <div class="input-group"><label>Manual Age</label><input type="number" id="m_age"></div>
+                <div class="full-width"><label>Gender</label>
+                    <select id="m_gender"><option>Male</option><option>Female</option></select>
+                </div>
+            </div>
+
+            <div class="section-title">Step 2: Clinical Parameters</div>
+            <div class="input-grid">
+                <div class="input-group"><label>Age</label><input type="number" id="age" placeholder="Ex: 25" required></div>
+                <div class="input-group" id="preg-group">
+    <label>Pregnancies</label>
+    <input type="number" id="pregnancies" value="0">
+</div>
+                <div class="input-group full-width"><label>Glucose Level (mg/dL)</label><input type="number" id="glucose" placeholder="Ex: 120" required></div>
+                <div class="input-group"><label>Blood Pressure</label><input type="number" id="bp" placeholder="80" required></div>
+                <div class="input-group"><label>Insulin</label><input type="number" id="insulin" placeholder="0" required></div>
+                <div class="input-group"><label>BMI</label><input type="number" step="0.1" id="bmi" placeholder="22.5" required></div>
+                <div class="input-group"><label>Skin Thickness (mm)</label><input type="number" id="skin" placeholder="20"></div>
+                <div class="input-group full-width"><label>Pedigree Score</label><input type="number" step="0.001" id="dpf" placeholder="0.47"></div>
+            </div>
+
+            <div class="mt-4">
+                <div class="section-title">Step 3: Lab Observations</div>
+                <textarea id="lab_remarks" rows="3" placeholder="Specialist remarks for PDF report..."></textarea>
+            </div>
+
+            <button type="submit" class="btn-submit">🚀 Run AI Prediction</button>
+        </form>
+    </div>
+
+    <div id="result-panel" class="glass-card">
+        <div class="section-title">AI Analysis Result</div>
+        
+        <div id="status-badge" class="status-card">
+            <h2 id="res-text" class="mb-0" style="font-weight: 800;"></h2>
+            <p id="res-subtext" class="small fw-bold"></p>
+        </div>
+
+        <div class="mt-4">
+            <div class="d-flex justify-content-between">
+                <span class="fw-bold">Risk Probability:</span>
+                <span id="risk-percent" class="fw-bold">0%</span>
+            </div>
+            <div class="risk-bar-container"><div id="risk-fill" class="risk-bar-fill"></div></div>
+        </div>
+
+        <div class="alert alert-warning mt-2" style="border-radius: 12px; border: none; background: #fff3cd; color: #856404;">
+            <strong>💡 AI Solution:</strong><br>
+            <span id="solution-box" style="font-size: 0.9rem;"></span>
+        </div>
+
+        <div class="text-center mb-3">
+            <small class="text-muted">Prediction Confidence: </small><span id="acc-box" class="badge bg-success"></span>
+        </div>
+
+        <button onclick="downloadPDF()" class="btn btn-success w-100 py-3 fw-bold shadow-sm" style="border-radius: 12px;">
+            📥 DOWNLOAD SIGNED PDF REPORT
+        </button>
+    </div>
+</div>
+
+<script>
+let mode = 'existing';
+let reportId = null;
+
+function toggleMode(m) {
+    mode = m;
+    document.getElementById('existing-sec').style.display = m==='existing' ? 'block' : 'none';
+    document.getElementById('manual-sec').style.display = m==='manual' ? 'block' : 'none';
+    document.getElementById('btn-ex').className = m==='existing' ? 'btn btn-primary btn-sm' : 'btn btn-outline-primary btn-sm';
+    document.getElementById('btn-man').className = m==='manual' ? 'btn btn-primary btn-sm' : 'btn btn-outline-primary btn-sm';
+}
+
+document.getElementById('preForm').onsubmit = async (e) => {
+    e.preventDefault();
+    const data = {
+        mode: mode,
+        patient_id: document.getElementById('patient_id').value,
+        m_name: document.getElementById('m_name').value,
+        m_age: document.getElementById('m_age').value,
+        m_gender: document.getElementById('m_gender').value,
+        age: document.getElementById('age').value,
+        glucose: document.getElementById('glucose').value,
+        bp: document.getElementById('bp').value,
+        insulin: document.getElementById('insulin').value,
+        bmi: document.getElementById('bmi').value,
+        pregnancies: document.getElementById('pregnancies').value,
+        skin: document.getElementById('skin').value,
+        dpf: document.getElementById('dpf').value,
+        remarks: document.getElementById('lab_remarks').value
+    };
+
+    const res = await fetch('/api/predict', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    }).then(r => r.json());
+
+    if(res.error) { alert(res.error); return; }
+
+    reportId = res.report_id;
+    document.getElementById('result-panel').style.display = 'flex';
+    
+    const resText = document.getElementById('res-text');
+    const badge = document.getElementById('status-badge');
+    
+    resText.innerText = res.result === 'Diabetic' ? "POSITIVE" : "NEGATIVE";
+    document.getElementById('res-subtext').innerText = res.result === 'Diabetic' ? "(Diabetes Detected)" : "(No Diabetes Detected)";
+    badge.style.background = res.result === 'Diabetic' ? '#fdecea' : '#e8f6f0';
+    badge.style.color = res.result === 'Diabetic' ? '#e74c3c' : '#27ae60';
+    
+    document.getElementById('risk-percent').innerText = res.risk_percent + "%";
+    document.getElementById('risk-fill').style.width = res.risk_percent + "%";
+    document.getElementById('risk-fill').style.background = res.risk_percent > 50 ? '#e74c3c' : '#27ae60';
+    document.getElementById('solution-box').innerText = res.solution;
+    document.getElementById('acc-box').innerText = res.accuracy;
+};
+
+function downloadPDF() {
+    if(reportId) window.location.href = `/download-report/${reportId}`;
+}
+</script>
+{% endblock %}

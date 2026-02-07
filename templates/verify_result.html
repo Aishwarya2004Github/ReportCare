@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 800px; margin: 40px auto; padding: 20px;">
+    <div style="background: #ebf9f1; border: 2px solid #27AE60; padding: 20px; border-radius: 15px; text-align: center; margin-bottom: 30px;">
+        <h2 style="color: #27AE60; margin: 0;">
+            <i class="fas fa-check-circle"></i> VERIFIED BY REPORTCARE
+        </h2>
+        <p style="color: #27AE60; font-weight: 500; margin-top: 5px;">This is an authentic diagnostic record.</p>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px;">
+        <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <h4 style="color: #34495e; border-bottom: 1px solid #eee; padding-bottom: 10px;">Patient Info</h4>
+            <p><strong>Name:</strong> {{ patient.name }}</p>
+            <p><strong>Age/Gender:</strong> {{ patient.age }} / {{ patient.gender }}</p>
+            <p><strong>Reg. Date:</strong> {{ patient.created_at.strftime('%d-%m-%Y') }}</p>
+        </div>
+
+        <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <h4 style="color: #27AE60; border-bottom: 1px solid #eee; padding-bottom: 10px;">Issued By (Lab Details)</h4>
+            <div style="display: flex; gap: 15px; align-items: center; margin-top: 10px;">
+                <img src="{{ url_for('static', filename='uploads/profile_pictures/' + lab.profile_pic) }}" style="width: 60px; height: 60px; border-radius: 50%; object-fit: cover;">
+                <div>
+                    <h3 style="margin: 0; color: #2c3e50;">{{ lab.name }}</h3>
+                    <p style="margin: 0; font-size: 13px; color: #7f8c8d;">License No: {{ lab.license_no }}</p>
+                </div>
+            </div>
+            <hr style="border: 0.5px solid #eee; margin: 15px 0;">
+            <p><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> <strong>Address:</strong> {{ lab.address }}</p>
+            <p><i class="fas fa-phone" style="color: #3498db;"></i> <strong>Contact:</strong> {{ lab.phone }}</p>
+            <p><i class="fas fa-envelope" style="color: #f39c12;"></i> <strong>Email:</strong> {{ lab.email }}</p>
+            
+            {% if lab.signature_img %}
+            <div style="margin-top: 20px; text-align: right;">
+                <p style="font-size: 12px; color: #95a5a6; margin-bottom: 5px;">Digital Signature</p>
+                <img src="{{ url_for('static', filename='uploads/signatures/' + lab.signature_img) }}" style="width: 120px; mix-blend-mode: multiply;">
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

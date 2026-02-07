@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div style="max-width: 900px; margin: 40px auto; padding: 20px;">
+    <h2 style="color: #2c3e50;"><i class="fas fa-search"></i> Search Results for: "{{ query }}"</h2>
+    <hr style="border: 0.5px solid #eee; margin-bottom: 30px;">
+
+    {% if results.labs %}
+    <h3 style="color: #27AE60; margin-bottom: 15px;"><i class="fas fa-microscope"></i> Registered Laboratories</h3>
+    <div style="display: grid; gap: 15px; margin-bottom: 40px;">
+        {% for lab in results.labs %}
+        <div onclick="window.location='/lab-public-profile/{{ lab.id }}'" 
+             style="background: #f8f9fa; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; gap: 15px; border: 1px solid #e1e4e8; transition: 0.3s;">
+            <img src="{{ url_for('static', filename='uploads/profile_pictures/' + lab.profile_pic) }}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
+            <div>
+                <div style="font-weight: bold; color: #2c3e50;">{{ lab.name }}</div>
+                <div style="font-size: 12px; color: #7f8c8d;"><i class="fas fa-map-marker-alt"></i> {{ lab.address }}</div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <h3 style="color: #3498db; margin-bottom: 15px;"><i class="fas fa-user-injured"></i> Your Patients</h3>
+    {% if not results.patients %}
+        <p style="color: #95a5a6; background: #fff; padding: 20px; border-radius: 10px; border: 1px dashed #ccc;">No patients found in your records.</p>
+    {% else %}
+        <div style="display: grid; gap: 15px;">
+            {% for p in results.patients %}
+            <div onclick="window.location='/patient-history/{{ p.id }}'" 
+                 style="background: white; padding: 15px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border-left: 5px solid #3498db;">
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <i class="fas fa-user-circle" style="font-size: 30px; color: #3498db;"></i>
+                    <div>
+                        <div style="font-weight: bold;">{{ p.name }}</div>
+                        <div style="font-size: 12px; color: #7f8c8d;">Age: {{ p.age }} | Gender: {{ p.gender }}</div>
+                    </div>
+                </div>
+                <span style="font-size: 11px; color: #3498db; font-weight: bold;">VIEW HISTORY ></span>
+            </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

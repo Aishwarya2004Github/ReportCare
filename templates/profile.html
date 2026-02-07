@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="profile-container" style="max-width: 900px; margin: 50px auto; padding: 20px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
+    
+    <div class="profile-card-header" style="background: #2c3e50; color: white; padding: 30px; border-radius: 15px 15px 0 0; text-align: center; border-bottom: 5px solid #27AE60;">
+        <h2 style="margin: 0; font-size: 28px;">User Dashboard</h2>
+        <p style="margin: 10px 0 0; opacity: 0.8; font-weight: 300;">Official Account: <span style="color: #27AE60; font-weight: bold;">{{ user.role }}</span></p>
+    </div>
+
+    <form action="/profile" method="POST" enctype="multipart/form-data">
+        <div class="profile-body" style="background: white; display: flex; flex-wrap: wrap; gap: 30px; padding: 40px; border-radius: 0 0 15px 15px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);">
+            
+            <div class="profile-visuals" style="flex: 1; text-align: center; border-right: 1px solid #eee; padding-right: 20px; min-width: 250px;">
+                <div class="profile-img-box" style="position: relative; display: inline-block;">
+                    <img src="{{ url_for('static', filename='uploads/profile_pictures/' + user.profile_pic) }}" 
+                         alt="Profile" style="width: 160px; height: 160px; border-radius: 50%; object-fit: cover; border: 5px solid #f1f1f1; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <label style="color: #7f8c8d; font-size: 13px; display: block; margin-bottom: 10px;">Update Profile Photo</label>
+                    <input type="file" name="profile_photo" accept="image/*" style="font-size: 12px; width: 100%; border: 1px solid #eee; padding: 5px; border-radius: 5px;">
+                </div>
+
+                <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+                
+                <div class="quick-links" style="text-align: left;">
+                    <p style="font-size: 12px; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px;">Navigation</p>
+                    <a href="/patient-histroy" style="display: block; padding: 10px 0; color: #2c3e50; text-decoration: none; font-weight: 600;">📊 Analysis History</a>
+                    <a href="/" style="display: block; padding: 10px 0; color: #2c3e50; text-decoration: none; font-weight: 600;">🏠 Home Page</a>
+                </div>
+            </div>
+
+            <div class="profile-info" style="flex: 2; min-width: 300px;">
+                <h3 style="color: #2c3e50; border-bottom: 2px solid #27AE60; padding-bottom: 10px; margin-bottom: 25px; display: flex; align-items: center; justify-content: space-between;">
+                    Official Information
+                    <span style="font-size: 12px; background: #e8f5e9; color: #27AE60; padding: 4px 12px; border-radius: 20px;">Verified Account</span>
+                </h3>
+                
+                <div class="info-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px;">
+                    
+                    <div class="field-box">
+                        <label style="color: #95a5a6; font-size: 11px; display: block; text-transform: uppercase; font-weight: bold;">Full Name</label>
+                        <div style="font-size: 17px; color: #2c3e50; font-weight: 600; padding: 8px 0;">{{ user.name }}</div>
+                    </div>
+
+                    <div class="field-box">
+                        <label style="color: #95a5a6; font-size: 11px; display: block; text-transform: uppercase; font-weight: bold;">Email Address</label>
+                        <div style="font-size: 17px; color: #2c3e50; font-weight: 600; padding: 8px 0;">{{ user.email }}</div>
+                    </div>
+
+                    <div class="field-box">
+                        <label style="color: #95a5a6; font-size: 11px; display: block; text-transform: uppercase; font-weight: bold;">Account Role</label>
+                        <div style="font-size: 17px; color: #27AE60; font-weight: 700; padding: 8px 0;">{{ user.role }}</div>
+                    </div>
+
+                    {% if user.role == 'Lab' %}
+                    <div class="field-box">
+                        <label style="color: #95a5a6; font-size: 11px; display: block; text-transform: uppercase; font-weight: bold;">Lab License Number</label>
+                        <div style="font-size: 17px; color: #2c3e50; font-weight: 600; padding: 8px 0;">{{ user.license_no or 'Not Provided' }}</div>
+                    </div>
+                    {% endif %}
+
+                    <div style="grid-column: span 2; padding-top: 10px;">
+                        <label style="color: #27AE60; font-size: 12px; display: block; font-weight: bold; margin-bottom: 8px;">Phone Number ✏️</label>
+                        <input type="text" name="phone" value="{{ user.phone }}" 
+                               style="width: 100%; border: 1.5px solid #eee; padding: 12px; border-radius: 8px; font-size: 15px; transition: 0.3s;" onfocus="this.style.borderColor='#27AE60'">
+                    </div>
+
+                    <div style="grid-column: span 2;">
+                        <label style="color: #27AE60; font-size: 12px; display: block; font-weight: bold; margin-bottom: 8px;">Registered Address ✏️</label>
+                        <textarea name="address" rows="3" 
+                                  style="width: 100%; border: 1.5px solid #eee; padding: 12px; border-radius: 8px; font-size: 15px; font-family: inherit; transition: 0.3s;" onfocus="this.style.borderColor='#27AE60'">{{ user.address }}</textarea>
+                    </div>
+                </div>
+
+                <div class="signature-section" style="margin-top: 30px; padding: 20px; background: #f9fdfb; border: 1px dashed #27AE60; border-radius: 12px;">
+                    <label style="color: #27AE60; font-size: 12px; display: block; font-weight: bold; margin-bottom: 12px;">Official Signature / Lab Stamp ✏️</label>
+                    <div style="display: flex; align-items: center; gap: 25px; flex-wrap: wrap;">
+                        {% if user.signature_img %}
+                        <img src="{{ url_for('static', filename='uploads/signatures/' + user.signature_img) }}" 
+                             alt="Signature" id="sig-preview" style="max-width: 180px; height: 70px; object-fit: contain; border: 1px solid #ddd; background: white; padding: 5px;">
+                        {% endif %}
+                        <div style="flex: 1;">
+                            <input type="file" name="signature" accept="image/*" style="font-size: 13px;">
+                            <p style="font-size: 11px; color: #7f8c8d; margin-top: 5px;">Upload a clear PNG/JPG of your signature or stamp.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions" style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 15px;">
+                    <button type="submit" style="flex: 2; background: #27AE60; color: white; padding: 15px; border: none; border-radius: 10px; cursor: pointer; font-weight: bold; font-size: 16px; box-shadow: 0 4px 10px rgba(39, 174, 96, 0.3); transition: 0.3s;">
+                        💾 Save Profile Changes
+                    </button>
+                    
+                    <button type="button" onclick="toggleDeleteModal()" style="flex: 1; background: #fff; color: #e74c3c; border: 2px solid #e74c3c; padding: 15px; border-radius: 10px; cursor: pointer; font-weight: bold; transition: 0.3s;">
+                        🗑️ Delete
+                    </button>
+                </div>
+
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="/logout" style="color: #7f8c8d; text-decoration: none; font-size: 14px;">Logout from session</a>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div id="deleteModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(5px);">
+    <div style="background: white; padding: 40px; border-radius: 20px; max-width: 450px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);">
+        <div style="width: 80px; height: 80px; background: #fdf2f2; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+            <span style="font-size: 40px; color: #e74c3c;">⚠️</span>
+        </div>
+        <h2 style="color: #2c3e50; margin: 0 0 15px;">Are you absolutely sure?</h2>
+        <p style="color: #636e72; line-height: 1.6; margin-bottom: 30px;">
+            This action is **permanent**. You will lose your profile, all uploaded reports, and your analysis history. There is no way to recover this data.
+        </p>
+        
+        <div style="display: flex; gap: 15px;">
+            <button onclick="toggleDeleteModal()" style="flex: 1; padding: 14px; border-radius: 10px; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; font-weight: 600; color: #2c3e50;">Cancel</button>
+            
+            <form action="/delete-account" method="POST" style="flex: 1;">
+                <button type="submit" style="width: 100%; background: #e74c3c; color: white; padding: 14px; border: none; border-radius: 10px; cursor: pointer; font-weight: 600;">Yes, Delete Everything</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Modal Toggle Function
+    function toggleDeleteModal() {
+        const modal = document.getElementById('deleteModal');
+        if (modal.style.display === 'flex') {
+            modal.style.display = 'none';
+        } else {
+            modal.style.display = 'flex';
+        }
+    }
+
+    // Simple fade in effect for the card
+    document.addEventListener('DOMContentLoaded', function() {
+        const container = document.querySelector('.profile-container');
+        container.style.opacity = '0';
+        container.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            container.style.transition = 'all 0.6s ease-out';
+            container.style.opacity = '1';
+            container.style.transform = 'translateY(0)';
+        }, 100);
+    });
+</script>
+{% endblock %}
