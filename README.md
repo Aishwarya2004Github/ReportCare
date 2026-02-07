@@ -27,3 +27,12 @@ ReportCare is a web-based platform designed to prevent medical report forgery. I
 1. Clone the repository:
    ```bash
    git clone [https://github.com/your-username/medical-report-verification.git](https://github.com/your-username/medical-report-verification.git)
+
+
+
+## DEMO
+
+
+https://github.com/user-attachments/assets/ba6d4a75-61f2-4bd2-93ea-18d9609edbb5
+
+
