@@ -23,10 +23,7 @@ ReportCare is a web-based platform designed to prevent medical report forgery. I
 - `templates/`: Jinja2 HTML templates (Home, Login, Register, Profile, etc.)
 - `exports/`: Generated PDF reports.
 
-## 🔧 Installation & Setup
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/your-username/medical-report-verification.git](https://github.com/your-username/medical-report-verification.git)
+
 
 
 
