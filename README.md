@@ -30,6 +30,9 @@ ReportCare is a web-based platform designed to prevent medical report forgery. I
 ## DEMO
 
 
-https://github.com/user-attachments/assets/ba6d4a75-61f2-4bd2-93ea-18d9609edbb5
+
+https://github.com/user-attachments/assets/73b778e1-331e-4a1f-b3df-f7c0345e9cf6
+
+
 
 
